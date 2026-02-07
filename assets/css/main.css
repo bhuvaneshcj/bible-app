@@ -1,8 +1,8 @@
 /* ============================================================
-   UNIFORM SPACING AND FONT SIZE SYSTEM
+   PORTFOLIO-INSPIRED DARK THEME DESIGN
    ============================================================ */
 
-/* Spacing Scale */
+/* Portfolio-Inspired Color Variables */
 :root {
     --spacing-1: 4px;
     /* 0.25rem */
@@ -19,6 +19,19 @@
     --spacing-8: 32px;
     /* 2rem */
 
+    /* Portfolio Color Palette */
+    --primary-blue: #3b82f6;
+    --primary-blue-dark: #1e3a8a;
+    --primary-blue-light: #60a5fa;
+    --bg-main: #000000;
+    --bg-card: #0a0a0a;
+    --bg-card-light: #ffffff;
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    --border-color-light: #4b5563;
+    
     /* Font Size Scale - Standard Professional Sizes */
     --text-xs: 12px;
     --text-sm: 14px;
@@ -35,50 +48,51 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Pure Black Background */
+/* Portfolio-Inspired Main Background */
 .gradient-bg {
-    background: #0a0a0a;
+    background: var(--bg-main);
     position: relative;
 }
 
 
-/* Solid Blue Text */
+/* Portfolio-Inspired Blue Text */
 .gradient-text {
-    color: #3b82f6;
+    color: var(--primary-blue);
 }
 
-/* Glass Morphism Effects - Pure Black Theme */
+/* Portfolio-Inspired Header */
 .glass-header {
-    background: rgba(20, 20, 20, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .glass-sidebar {
-    background: rgba(15, 15, 15, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.3);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border-right: 1px solid var(--border-color);
 }
 
 .glass-card {
-    background: rgba(25, 25, 25, 0.9);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    background: rgba(22, 27, 34, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(33, 38, 45, 0.3);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .glass-button {
-    background: rgba(30, 30, 30, 0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
 }
 
 .glass-button:hover {
@@ -115,11 +129,11 @@ html {
 }
 
 .glass-modal {
-    background: rgba(15, 15, 15, 0.98);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Solid Blue Button */
@@ -128,13 +142,12 @@ html {
     border: none;
     color: white;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .gradient-button:hover {
-    background: #2563eb;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    background: var(--primary-blue-dark);
+    border-color: var(--primary-blue-dark);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.4);
     transform: translateY(-1px);
 }
 
@@ -233,27 +246,27 @@ select:focus-visible {
     z-index: 1;
 }
 
-/* Verse Card Styling - Dark Glass */
+/* Portfolio-Inspired Verse Card */
 .verse-card {
-    background: rgba(25, 25, 25, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 1.25rem 1.5rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .verse-card:hover {
-    background: rgba(25, 25, 25, 0.9);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: var(--bg-card);
+    border-color: var(--border-color-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Verse Number Styling - Blue Theme */
+/* Portfolio-Inspired Verse Number */
 .verse-number {
-    color: #3b82f6;
+    color: var(--primary-blue);
     font-weight: 600;
     font-size: 0.9em;
     margin-right: 0.5em;
@@ -298,23 +311,23 @@ select:focus-visible {
     }
 }
 
-/* Enhanced Sidebar Design */
+/* Portfolio-Inspired Sidebar Design */
 .sidebar-section {
-    background: rgba(20, 20, 20, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: var(--spacing-4);
     margin-bottom: var(--spacing-4);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .sidebar-section:hover {
-    background: rgba(25, 25, 25, 0.8);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: var(--bg-card);
+    border-color: var(--border-color-light);
 }
 
 .sidebar-title {
-    color: #3b82f6;
+    color: var(--primary-blue);
     font-size: var(--text-sm);
     font-weight: 600;
     text-transform: uppercase;
@@ -334,28 +347,28 @@ select:focus-visible {
 }
 
 .book-item {
-    background: rgba(30, 30, 30, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: var(--spacing-2) var(--spacing-3);
     margin-bottom: var(--spacing-1);
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: var(--text-base);
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-secondary);
 }
 
 .book-item:hover {
-    background: rgba(40, 40, 40, 0.6);
-    border-color: rgba(59, 130, 246, 0.3);
+    background: var(--bg-card);
+    border-color: var(--primary-blue);
     transform: translateX(2px);
-    color: white;
+    color: var(--text-primary);
 }
 
 .book-item.active {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: rgba(59, 130, 246, 0.4);
-    color: white;
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-blue);
+    color: var(--text-primary);
 }
 
 .filter-buttons {
@@ -366,27 +379,27 @@ select:focus-visible {
 }
 
 .filter-btn {
-    background: rgba(30, 30, 30, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: var(--spacing-2) var(--spacing-1);
     font-size: var(--text-sm);
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
 }
 
 .filter-btn:hover {
-    background: rgba(40, 40, 40, 0.8);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: white;
+    background: var(--bg-card);
+    border-color: var(--border-color-light);
+    color: var(--text-primary);
 }
 
 .filter-btn.active {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
     color: white;
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
@@ -398,13 +411,13 @@ select:focus-visible {
 }
 
 .chapter-btn {
-    background: rgba(30, 30, 30, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     padding: var(--spacing-2) var(--spacing-1);
     font-size: var(--text-sm);
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
@@ -415,13 +428,41 @@ select:focus-visible {
 }
 
 .chapter-btn:hover {
-    background: rgba(40, 40, 40, 0.8);
-    border-color: rgba(59, 130, 246, 0.3);
-    color: white;
+    background: var(--bg-card);
+    border-color: var(--primary-blue);
+    color: var(--text-primary);
     transform: scale(1.05);
 }
 
 .chapter-btn.active {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+/* Chapter Badge - Clean Dark Design */
+.chapter-badge {
+    background: rgba(33, 38, 45, 0.8);
+    border: 1px solid rgba(33, 38, 45, 0.3);
+    border-radius: 6px;
+    padding: var(--spacing-2) var(--spacing-1);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.chapter-badge:hover {
+    background: rgba(33, 38, 45, 0.9);
+    border-color: rgba(33, 38, 45, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.chapter-badge.active {
     background: #3b82f6;
     border-color: #3b82f6;
     color: white;
@@ -476,14 +517,14 @@ select:focus-visible {
     animation: spin 1s linear infinite;
 }
 
-/* Search Highlight - Blue Accent */
+/* Portfolio-Inspired Search Highlight */
 mark {
-    background: #3b82f6;
+    background: var(--primary-blue);
     color: white;
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: 500;
-    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
 }
 
 /* Mobile Responsive */
@@ -496,17 +537,17 @@ mark {
         z-index: 40; /* Below header (z-index: 50) */
     }
     
-    /* Ensure footer is visible on mobile */
+    /* Portfolio-Inspired Mobile Footer */
     .bottom-navigation {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
         z-index: 45; /* Above sidebar but below header */
-        background: rgba(20, 20, 20, 0.9);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg-card);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-top: 1px solid var(--border-color);
         padding: 1rem;
     }
 }
@@ -579,80 +620,13 @@ button,
 
 }
 
-/* Chapter Number Badge - Dark Glass */
-.chapter-badge {
-    background: rgba(30, 30, 30, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-}
-
-.chapter-badge:hover {
-    background: rgba(40, 40, 40, 0.95);
-    border-color: rgba(59, 130, 246, 0.4);
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
-}
-
-.chapter-badge.active {
-    background: #3b82f6;
-    border-color: transparent;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-}
-
-/* Language/Book Grid Items - Compact */
-.grid-item {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.grid-item:hover {
-    transform: translateY(-2px);
-}
-
-/* Glass Effect for Select Dropdown */
-select.glass-input option {
-    background: rgba(10, 10, 20, 0.98);
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Glow Effects for Interactive Elements */
-.glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
-        0 0 40px rgba(59, 130, 246, 0.1);
-}
-
-/* Subtle Border Glow on Hover */
-.glass-card:hover,
-.glass-button:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(59, 130, 246, 0.1);
-}
-
-/* Dark Overlay for Modals */
-.modal-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-/* Text Colors for Dark Theme */
-.text-muted {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.text-subtle {
-    color: rgba(255, 255, 255, 0.7);
+/* Active/Selected States */
+.active-item {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
 /* Divider Lines */
 .divider {
     border-color: rgba(255, 255, 255, 0.06);
-}
-
-/* Active/Selected States */
-.active-item {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: rgba(59, 130, 246, 0.3);
 }
