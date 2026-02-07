@@ -19,7 +19,6 @@
         content="Read the Holy Bible in 18+ languages. Free, fast, and easy-to-use Bible reading experience." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bhuvaneshcj.github.io/bible-app/" />
-    <meta property="og:image" content="https://bhuvaneshcj.github.io/bible-app/assets/og-image.png" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://bhuvaneshcj.github.io/bible-app/" />
@@ -30,82 +29,283 @@
 
     <!-- PWA -->
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <meta name="theme-color" content="#2b7fff" />
+    <meta name="theme-color" content="#0a0a0f" />
 
     <!-- Tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="bible-app/assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body class="bg-gray-50 text-gray-800 transition-colors">
+<body class="gradient-bg text-white min-h-screen overflow-hidden">
 
-    <!-- Navbar -->
-    <header class="bg-white border-b">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <!-- Left -->
-            <div class="text-xl font-bold text-[#2b7fff]">
-                📖 Bible
+    <!-- Main App Container -->
+    <div id="app" class="h-screen flex flex-col">
+
+        <!-- Header -->
+        <header class="glass-header border-b border-white/10 backdrop-blur-xl sticky top-0 z-50">
+            <div class="px-4 sm:px-6 py-4 flex items-center justify-between">
+
+                <!-- Left: Menu Toggle (Mobile) + Logo -->
+                <div class="flex items-center gap-3">
+                    <button id="menuToggle" class="lg:hidden p-2.5 rounded-xl glass-button" title="Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xl">📖</span>
+                        <span class="text-xl font-bold gradient-text hidden sm:inline">Holy Bible</span>
+                    </div>
+                </div>
+
+                <!-- Right: Actions -->
+                <div class="flex items-center gap-2">
+                    <button id="searchBtn" class="p-2.5 rounded-xl glass-button hover:scale-105 transition-transform"
+                        title="Search">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+
+                    <button id="languageBtn" class="p-2.5 rounded-xl glass-button hover:scale-105 transition-transform"
+                        title="Change Language">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <button id="fontSizeBtn" class="p-2.5 rounded-xl glass-button hover:scale-105 transition-transform"
+                        title="Text Size">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
+        </header>
 
-            <!-- Right -->
-            <button
-                id="fullscreenToggle"
-                class="p-2 rounded-lg hover:bg-gray-100 transition"
-                aria-label="Toggle fullscreen"
-                title="Toggle fullscreen"
-            >
-                <span id="fullscreenIcon">⛶</span>
+        <!-- Main Content Area -->
+        <div class="flex-1 flex overflow-hidden">
+
+            <!-- Sidebar -->
+            <aside id="sidebar"
+                class="sidebar glass-sidebar border-r border-white/10 backdrop-blur-xl w-72 flex-shrink-0 overflow-y-auto transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:relative h-full z-40">
+                <div class="p-4 space-y-4">
+
+                    <!-- Current Book Info -->
+                    <div id="sidebarBookInfo" class="hidden">
+                        <div class="sidebar-section">
+                            <div class="sidebar-title">Currently Reading</div>
+                            <div id="sidebarBookName" class="text-lg font-bold text-white mb-1"></div>
+                            <div id="sidebarChapterName" class="text-base text-white/70"></div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter Grid -->
+                    <div id="sidebarChapters" class="hidden">
+                        <div class="sidebar-section">
+                            <div class="sidebar-title">Chapters</div>
+                            <div id="sidebarChapterGrid" class="chapter-grid"></div>
+                        </div>
+                    </div>
+
+                    <!-- Book List -->
+                    <div id="sidebarBooks" class="hidden">
+                        <div class="sidebar-section">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="sidebar-title mb-0">Books</div>
+                                <button id="sidebarBackToBooks"
+                                    class="hidden text-base glass-button px-3 py-1 rounded-lg">Back</button>
+                            </div>
+
+                            <!-- Testament Filters -->
+                            <div class="filter-buttons">
+                                <button id="sidebarFilterAll" class="filter-btn active">All</button>
+                                <button id="sidebarFilterOld" class="filter-btn">OT</button>
+                                <button id="sidebarFilterNew" class="filter-btn">NT</button>
+                            </div>
+
+                            <!-- Search Books -->
+                            <input type="text" id="sidebarBookSearch" placeholder="Search books..."
+                                class="w-full px-3 py-2 rounded-lg glass-input text-lg mb-3" />
+
+                            <!-- Books List -->
+                            <div id="sidebarBookList" class="space-y-1 max-h-[calc(100vh-320px)] overflow-y-auto pr-1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Selector -->
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Language</div>
+                        <div id="sidebarLanguageName" class="text-lg font-semibold text-white">Select Language</div>
+                    </div>
+
+                </div>
+            </aside>
+
+            <!-- Sidebar Overlay (Mobile) -->
+            <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 lg:hidden hidden"></div>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+
+                <!-- View: Language Selection -->
+                <div id="languageView" class="hidden p-6 sm:p-8 max-w-6xl mx-auto">
+                    <div class="text-center mb-6">
+                        <h1 class="text-3xl md:text-4xl font-bold gradient-text mb-3">Choose Your Language</h1>
+                        <p class="text-white/70 text-base">Read the Holy Bible in your preferred language</p>
+                    </div>
+                    <div id="languageGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+                </div>
+
+                <!-- View: Book Selection -->
+                <div id="bookView" class="hidden p-6 sm:p-8 max-w-6xl mx-auto">
+                    <div class="mb-6">
+                        <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-2">Select a Book</h2>
+                        <p class="text-white/70 text-base">Choose from the Old or New Testament</p>
+                    </div>
+                    <div id="bookGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- View: Verse Reader -->
+                <div id="verseView" class="hidden">
+                    <div class="max-w-4xl mx-auto p-6 sm:p-8">
+
+                        <!-- Chapter Header -->
+                        <div class="mb-6">
+                            <div class="glass-card p-4 rounded-2xl mb-4">
+                                <h1 id="verseViewTitle" class="text-2xl md:text-3xl font-bold gradient-text mb-1"></h1>
+                                <p id="verseViewSubtitle" class="text-white/70 text-base"></p>
+                            </div>
+
+                            <!-- Navigation Controls -->
+                            <div class="flex items-center justify-between gap-3">
+                                <button id="prevChapterBtn"
+                                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-button hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                    <span class="font-medium text-base hidden sm:inline">Previous</span>
+                                </button>
+
+                                <button id="nextChapterBtn"
+                                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-button hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                    <span class="font-medium text-base hidden sm:inline">Next</span>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Verses Container -->
+                        <div id="versesContainer" class="space-y-4 mb-8"></div>
+
+                        <!-- Bottom Navigation -->
+                        <div class="flex items-center justify-center gap-4 pt-6 border-t border-white/10">
+                            <button id="prevChapterBtnBottom"
+                                class="flex items-center gap-2 px-5 py-2.5 rounded-xl glass-button hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                <span class="font-medium text-lg hidden sm:inline">Previous Chapter</span>
+                            </button>
+
+                            <button id="nextChapterBtnBottom"
+                                class="flex items-center gap-2 px-5 py-2.5 rounded-xl glass-button hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                <span class="font-medium text-lg hidden sm:inline">Next Chapter</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Search Results -->
+                <div id="searchView" class="hidden p-6 sm:p-8 max-w-6xl mx-auto">
+                    <div class="mb-6">
+                        <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-4">Search Bible</h2>
+
+                        <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-3">
+                            <input type="text" id="searchInput" placeholder="Enter keyword to search..."
+                                class="flex-1 px-4 py-2.5 rounded-xl glass-input text-base" />
+                            <select id="searchScope" class="px-4 py-2.5 rounded-xl glass-input text-base sm:w-48">
+                                <option value="all">All Books</option>
+                                <option value="current">Current Book</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="searchResultsContainer">
+                        <p class="text-center text-white/50 py-10 text-base">Enter a keyword to search the Bible</p>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Font Size Modal -->
+    <div id="fontSizeModal"
+        class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="glass-modal rounded-2xl shadow-2xl max-w-md w-full p-6 border border-white/20">
+            <h3 class="text-xl font-bold gradient-text mb-5">Reading Settings</h3>
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-base font-medium mb-2 text-white/80">Font Size: <span id="fontSizeValue"
+                            class="gradient-text font-bold"></span>px</label>
+                    <input type="range" id="fontSizeSlider" min="14" max="28" step="1" class="w-full glass-slider">
+                </div>
+                <div>
+                    <label class="block text-base font-medium mb-2 text-white/80">Line Height: <span
+                            id="lineHeightValue" class="gradient-text font-bold"></span></label>
+                    <input type="range" id="lineHeightSlider" min="1.5" max="2.5" step="0.1"
+                        class="w-full glass-slider">
+                </div>
+            </div>
+            <button id="closeFontModal"
+                class="mt-6 w-full px-5 py-3 gradient-button rounded-xl font-semibold hover:scale-105 transition-transform">
+                Done
             </button>
         </div>
-    </header>
+    </div>
 
-    <!-- Main -->
-    <main class="max-w-6xl mx-auto px-4 py-10">
-
-        <!-- Intro -->
-        <section class="text-center mb-10">
-            <h1 class="text-3xl font-semibold mb-3">
-                Choose Your Language
-            </h1>
-            <p class="text-gray-600">
-                Read the Holy Bible in your preferred language
-            </p>
-        </section>
-
-        <!-- Languages -->
-        <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            <button class="lang-btn">English</button>
-            <button class="lang-btn">Hindi</button>
-            <button class="lang-btn">Tamil</button>
-            <button class="lang-btn">Telugu</button>
-            <button class="lang-btn">Malayalam</button>
-            <button class="lang-btn">Kannada</button>
-            <button class="lang-btn">Gujarati</button>
-            <button class="lang-btn">Bengali</button>
-            <button class="lang-btn">Marathi</button>
-            <button class="lang-btn">Punjabi</button>
-            <button class="lang-btn">Oriya (Odia)</button>
-            <button class="lang-btn">Nepali</button>
-            <button class="lang-btn">Afrikaans</button>
-            <button class="lang-btn">Indonesian</button>
-            <button class="lang-btn">Hungarian</button>
-            <button class="lang-btn">Sepedi</button>
-            <button class="lang-btn">Xhosa</button>
-            <button class="lang-btn">Zulu</button>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-16 border-t">
-        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
-            © <span id="year"></span> Holy Bible App · Built with ❤️
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator"
+        class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center">
+        <div class="glass-modal rounded-2xl shadow-2xl p-6 flex flex-col items-center gap-4">
+            <svg class="animate-spin h-10 w-10 gradient-text" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+            <span class="font-semibold">Loading...</span>
         </div>
-    </footer>
+    </div>
 
     <!-- Scripts -->
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
