@@ -2,17 +2,17 @@
     "name": "Holy Bible App",
     "short_name": "Bible",
     "description": "Read the Holy Bible in multiple languages with a clean and distraction-free experience.",
-    "start_url": "/bible-app/",
-    "scope": "/bible-app/",
+    "start_url": "./",
+    "scope": "./",
     "icons": [
         {
-            "src": "/bible-app/assets/favicon/android-chrome-192x192.png",
+            "src": "assets/favicon/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "/bible-app/assets/favicon/android-chrome-512x512.png",
+            "src": "assets/favicon/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
