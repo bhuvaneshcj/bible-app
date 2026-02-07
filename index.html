@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Holy Bible App | Read the Bible in Multiple Languages</title>
+
+    <!-- SEO -->
+    <meta name="description"
+        content="Read the Holy Bible online in multiple languages including English, Hindi, Tamil, Telugu, Malayalam, Gujarati, Bengali, Marathi, Punjabi, Kannada, Oriya, Nepali, Afrikaans, Indonesian, Hungarian, Sepedi, Xhosa, and Zulu." />
+    <meta name="author" content="Bhuvanesh CJ" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Holy Bible App | Multilingual Bible Reader" />
+    <meta property="og:description"
+        content="Read the Holy Bible in 18+ languages. Free, fast, and easy-to-use Bible reading experience." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bhuvaneshcj.github.io/bible-app/" />
+    <meta property="og:image" content="https://bhuvaneshcj.github.io/bible-app/assets/og-image.png" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://bhuvaneshcj.github.io/bible-app/" />
+
+    <!-- Icons -->
+    <link rel="icon" href="/bible-app/assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/bible-app/assets/favicon/apple-touch-icon.png" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/bible-app/assets/favicon/site.webmanifest" />
+    <meta name="theme-color" content="#2b7fff" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 transition-colors">
+
+    <!-- Navbar -->
+    <header class="bg-white border-b">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Left -->
+            <div class="text-xl font-bold text-[#2b7fff]">
+                📖 Bible
+            </div>
+
+            <!-- Right -->
+            <button
+                id="fullscreenToggle"
+                class="p-2 rounded-lg hover:bg-gray-100 transition"
+                aria-label="Toggle fullscreen"
+                title="Toggle fullscreen"
+            >
+                <span id="fullscreenIcon">⛶</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
+
+        <!-- Intro -->
+        <section class="text-center mb-10">
+            <h1 class="text-3xl font-semibold mb-3">
+                Choose Your Language
+            </h1>
+            <p class="text-gray-600">
+                Read the Holy Bible in your preferred language
+            </p>
+        </section>
+
+        <!-- Languages -->
+        <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <button class="lang-btn">English</button>
+            <button class="lang-btn">Hindi</button>
+            <button class="lang-btn">Tamil</button>
+            <button class="lang-btn">Telugu</button>
+            <button class="lang-btn">Malayalam</button>
+            <button class="lang-btn">Kannada</button>
+            <button class="lang-btn">Gujarati</button>
+            <button class="lang-btn">Bengali</button>
+            <button class="lang-btn">Marathi</button>
+            <button class="lang-btn">Punjabi</button>
+            <button class="lang-btn">Oriya (Odia)</button>
+            <button class="lang-btn">Nepali</button>
+            <button class="lang-btn">Afrikaans</button>
+            <button class="lang-btn">Indonesian</button>
+            <button class="lang-btn">Hungarian</button>
+            <button class="lang-btn">Sepedi</button>
+            <button class="lang-btn">Xhosa</button>
+            <button class="lang-btn">Zulu</button>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 border-t">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
+            © <span id="year"></span> Holy Bible App · Built with ❤️
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
