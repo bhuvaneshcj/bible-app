@@ -538,24 +538,27 @@ function navigateToVerseReading(bookIndex, chapterIndex) {
     setTimeout(() => {
         // Try multiple scroll methods for better compatibility
         try {
-            // Method 1: Smooth scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Method 1: Scroll the main content area (most reliable)
+            const mainElement = document.querySelector('main');
+            if (mainElement) {
+                mainElement.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         } catch (e) {
             try {
-                // Method 2: Instant scroll to top
-                window.scrollTo(0, 0);
+                // Method 2: Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch (e2) {
-                // Method 3: Scroll the main content area
-                const mainElement = document.querySelector('main');
-                if (mainElement) {
-                    mainElement.scrollTop = 0;
+                try {
+                    // Method 3: Instant scroll to top
+                    window.scrollTo(0, 0);
+                } catch (e3) {
+                    // Method 4: Scroll the body
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
                 }
-                // Method 4: Scroll the body
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
             }
         }
-    }, 150);
+    }, 200);
 }
 
 function renderVerses() {
