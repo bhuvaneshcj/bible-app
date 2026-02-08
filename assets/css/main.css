@@ -1,5 +1,5 @@
 /* ============================================================
-   PORTFOLIO-INSPIRED DARK THEME DESIGN
+   PORTFOLIO-INSPIRED DARK/LIGHT THEME DESIGN
    ============================================================ */
 
 /* Portfolio-Inspired Color Variables */
@@ -19,18 +19,26 @@
     --spacing-8: 32px;
     /* 2rem */
 
-    /* Portfolio Color Palette */
+    /* Light Theme Colors */
     --primary-blue: #3b82f6;
     --primary-blue-dark: #1e3a8a;
     --primary-blue-light: #60a5fa;
-    --bg-main: #000000;
-    --bg-card: #0a0a0a;
+    --bg-main-light: #ffffff;
     --bg-card-light: #ffffff;
-    --text-primary: #ffffff;
-    --text-secondary: #d1d5db;
-    --text-muted: #9ca3af;
-    --border-color: #374151;
-    --border-color-light: #4b5563;
+    --text-primary-light: #1f2937;
+    --text-secondary-light: #6b7280;
+    --text-muted-light: #9ca3af;
+    --border-color-light: #e5e7eb;
+    --border-color-light-light: #d1d5db;
+    
+    /* Dark Theme Colors */
+    --bg-main-dark: #000000;
+    --bg-card-dark: #0a0a0a;
+    --text-primary-dark: #ffffff;
+    --text-secondary-dark: #d1d5db;
+    --text-muted-dark: #9ca3af;
+    --border-color-dark: #1f2227;
+    --border-color-light-dark: #4b5563;
     
     /* Font Size Scale - Standard Professional Sizes */
     --text-xs: 12px;
@@ -43,6 +51,28 @@
     --text-4xl: 32px;
 }
 
+/* Light Theme (Default) */
+:root {
+    --bg-main: var(--bg-main-light);
+    --bg-card: var(--bg-card-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --text-muted: var(--text-muted-light);
+    --border-color: var(--border-color-light);
+    --border-color-light: var(--border-color-light-light);
+}
+
+/* Dark Theme */
+.dark {
+    --bg-main: var(--bg-main-dark);
+    --bg-card: var(--bg-card-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: var(--text-muted-dark);
+    --border-color: var(--border-color-dark);
+    --border-color-light: var(--border-color-light-dark);
+}
+
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
@@ -52,6 +82,8 @@ html {
 .gradient-bg {
     background: var(--bg-main);
     position: relative;
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 
@@ -60,30 +92,37 @@ html {
     color: var(--primary-blue);
 }
 
+.text-primary-blue {
+    color: var(--primary-blue);
+}
+
 /* Portfolio-Inspired Header */
 .glass-header {
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .glass-sidebar {
     background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border-right: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .glass-card {
-    background: rgba(22, 27, 34, 0.8);
+    background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(33, 38, 45, 0.3);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .glass-button {
@@ -91,40 +130,41 @@ html {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
+    color: var(--text-primary);
 }
 
 .glass-button:hover {
-    background: rgba(40, 40, 40, 0.95);
-    border-color: rgba(59, 130, 246, 0.4);
+    background: var(--bg-card);
+    border-color: var(--primary-blue);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
     transform: translateY(-1px);
 }
 
 .glass-button:active {
     transform: translateY(0);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .glass-input {
-    background: rgba(25, 25, 25, 0.9);
+    background: var(--bg-card);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .glass-input::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--text-muted);
 }
 
 .glass-input:focus {
     outline: none;
-    background: rgba(30, 30, 30, 0.95);
-    border-color: rgba(59, 130, 246, 0.5);
+    background: var(--bg-card);
+    border-color: var(--primary-blue);
     box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
 }
 
@@ -133,7 +173,8 @@ html {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
 /* Solid Blue Button */
@@ -155,26 +196,28 @@ html {
     transform: translateY(0);
 }
 
-/* Custom Scrollbar - Pure Black Theme */
+/* Custom Scrollbar - Theme Adaptive */
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--bg-card);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.4);
+    background: var(--primary-blue);
     border-radius: 10px;
     border: 2px solid transparent;
     background-clip: padding-box;
+    opacity: 0.4;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(59, 130, 246, 0.6);
+    background: var(--primary-blue);
+    opacity: 0.6;
     background-clip: padding-box;
 }
 
@@ -192,17 +235,17 @@ select:focus-visible {
     outline-offset: 2px;
 }
 
-/* Range Slider - Pure Black Theme */
+/* Range Slider - Theme Adaptive */
 .glass-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 10px;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--bg-card);
     outline: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .glass-slider::-webkit-slider-thumb {
@@ -211,7 +254,7 @@ select:focus-visible {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: var(--primary-blue);
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
     transition: all 0.3s ease;
@@ -226,7 +269,7 @@ select:focus-visible {
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: var(--primary-blue);
     cursor: pointer;
     border: none;
     box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
@@ -244,24 +287,23 @@ select:focus-visible {
     line-height: 1.8;
     position: relative;
     z-index: 1;
+    font-family: inherit;
 }
 
-/* Portfolio-Inspired Verse Card */
-.verse-card {
-    background: var(--bg-card);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+/* Verse Item with Border Bottom */
+.verse-item {
+    margin: 0px !important;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color 0.2s ease;
 }
 
-.verse-card:hover {
-    background: var(--bg-card);
-    border-color: var(--border-color-light);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+.verse-item:last-child {
+    border-bottom: none;
+}
+
+.verse-item:hover {
+    border-bottom-color: var(--border-color-light);
 }
 
 /* Portfolio-Inspired Verse Number */
@@ -279,27 +321,13 @@ select:focus-visible {
     scrollbar-color: rgba(59, 130, 246, 0.3) transparent;
     position: relative;
     z-index: 1;
+    width: 320px !important;
 }
 
 /* Responsive Sidebar Widths */
 @media (min-width: 1024px) {
     .sidebar {
-        width: 320px;
-        /* Increased from 288px */
-    }
-}
-
-@media (min-width: 1280px) {
-    .sidebar {
-        width: 360px;
-        /* Even larger for large desktops */
-    }
-}
-
-@media (min-width: 1536px) {
-    .sidebar {
-        width: 400px;
-        /* Extra large for very wide screens */
+        width: 384px !important;
     }
 }
 
@@ -342,7 +370,7 @@ select:focus-visible {
     content: '';
     width: 3px;
     height: 12px;
-    background: #3b82f6;
+    background: var(--primary-blue);
     border-radius: 2px;
 }
 
@@ -441,30 +469,30 @@ select:focus-visible {
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
-/* Chapter Badge - Clean Dark Design */
+/* Chapter Badge - Theme Adaptive Design */
 .chapter-badge {
-    background: rgba(33, 38, 45, 0.8);
-    border: 1px solid rgba(33, 38, 45, 0.3);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: var(--spacing-2) var(--spacing-1);
     font-size: var(--text-xs);
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .chapter-badge:hover {
-    background: rgba(33, 38, 45, 0.9);
-    border-color: rgba(33, 38, 45, 0.4);
-    color: rgba(255, 255, 255, 0.9);
+    background: var(--bg-card);
+    border-color: var(--border-color-light);
+    color: var(--text-primary);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .chapter-badge.active {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
     color: white;
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
@@ -549,6 +577,7 @@ mark {
         -webkit-backdrop-filter: blur(12px);
         border-top: 1px solid var(--border-color);
         padding: 1rem;
+        transition: all 0.3s ease;
     }
 }
 

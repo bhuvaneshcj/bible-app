@@ -31,8 +31,14 @@
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
     <meta name="theme-color" content="#0a0a0f" />
 
-    <!-- Tailwind -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Tailwind CSS CDN - Using v3 for better dark mode support -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configure Tailwind for class-based dark mode
+        tailwind.config = {
+            darkMode: 'class'
+        };
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,13 +49,13 @@
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
-<body class="gradient-bg text-white min-h-screen overflow-hidden">
+<body class="gradient-bg min-h-screen overflow-hidden transition-colors duration-300">
 
     <!-- Main App Container -->
     <div id="app" class="h-screen flex flex-col">
 
         <!-- Header -->
-        <header class="glass-header border-b border-white/10 backdrop-blur-xl sticky top-0 z-50">
+        <header class="glass-header border-b backdrop-blur-xl sticky top-0 z-50">
             <div class="px-4 sm:px-6 py-4 flex items-center justify-between">
 
                 <!-- Left: Menu Toggle (Mobile) + Logo -->
@@ -68,6 +74,15 @@
 
                 <!-- Right: Actions -->
                 <div class="flex items-center gap-2">
+                    <button id="themeToggle" class="p-2.5 rounded-xl glass-button hover:scale-105 transition-transform" title="Toggle Theme">
+                        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    
                     <button id="searchBtn" class="p-2.5 rounded-xl glass-button hover:scale-105 transition-transform"
                         title="Search">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,15 +116,15 @@
 
             <!-- Sidebar -->
             <aside id="sidebar"
-                class="sidebar glass-sidebar border-r border-white/10 backdrop-blur-xl w-72 flex-shrink-0 overflow-y-auto transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:relative h-full z-40">
+                class="sidebar glass-sidebar border-r backdrop-blur-xl w-72 flex-shrink-0 overflow-y-auto transition-transform duration-300 -translate-x-full lg:translate-x-0 fixed lg:relative h-full z-40">
                 <div class="p-4 space-y-4">
 
                     <!-- Current Book Info -->
                     <div id="sidebarBookInfo" class="hidden">
                         <div class="sidebar-section">
                             <div class="sidebar-title">Currently Reading</div>
-                            <div id="sidebarBookName" class="text-lg font-bold text-white mb-1"></div>
-                            <div id="sidebarChapterName" class="text-base text-white/70"></div>
+                            <div id="sidebarBookName" class="text-lg font-bold mb-1"></div>
+                            <div id="sidebarChapterName" class="text-base opacity-70"></div>
                         </div>
                     </div>
 
@@ -150,7 +165,7 @@
                     <!-- Language Selector -->
                     <div class="sidebar-section">
                         <div class="sidebar-title">Language</div>
-                        <div id="sidebarLanguageName" class="text-lg font-semibold text-white">Select Language</div>
+                        <div id="sidebarLanguageName" class="text-lg font-semibold"></div>
                     </div>
 
                 </div>
@@ -160,13 +175,13 @@
             <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 lg:hidden hidden"></div>
 
             <!-- Main Content -->
-            <main class="flex-1 overflow-y-auto">
+            <main class="flex-1 overflow-y-auto mb-[55px]">
 
                 <!-- View: Language Selection -->
                 <div id="languageView" class="hidden p-6 sm:p-8 max-w-6xl mx-auto">
                     <div class="text-center mb-6">
                         <h1 class="text-3xl md:text-4xl font-bold gradient-text mb-3">Choose Your Language</h1>
-                        <p class="text-white/70 text-base">Read the Holy Bible in your preferred language</p>
+                        <p class="opacity-70 text-base">Read the Holy Bible in your preferred language</p>
                     </div>
                     <div id="languageGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
                 </div>
@@ -175,7 +190,7 @@
                 <div id="bookView" class="hidden p-6 sm:p-8 max-w-6xl mx-auto">
                     <div class="mb-6">
                         <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-2">Select a Book</h2>
-                        <p class="text-white/70 text-base">Choose from the Old or New Testament</p>
+                        <p class="opacity-70 text-base">Choose from the Old or New Testament</p>
                     </div>
                     <div id="bookGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
@@ -186,9 +201,9 @@
 
                         <!-- Chapter Header -->
                         <div class="mb-6">
-                            <div class="glass-card p-4 rounded-2xl mb-4">
+                            <div class="flex items-center justify-between mb-4">
                                 <h1 id="verseViewTitle" class="text-2xl md:text-3xl font-bold gradient-text mb-1"></h1>
-                                <p id="verseViewSubtitle" class="text-white/70 text-base"></p>
+                                <p id="verseViewSubtitle" class="opacity-70 text-base"></p>
                             </div>
 
                             <!-- Navigation Controls -->
@@ -217,7 +232,7 @@
                         <div id="versesContainer" class="space-y-4 mb-8"></div>
 
                         <!-- Bottom Navigation -->
-                        <div class="bottom-navigation flex items-center justify-center gap-4 pt-6 border-t border-white/10">
+                        <div class="bottom-navigation flex items-center justify-center gap-4 pt-6 border-t border-t-gray-300 dark:border-t-gray-700">
                             <button id="prevChapterBtnBottom"
                                 class="flex items-center gap-2 px-5 py-2.5 rounded-xl glass-button hover:scale-105 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +270,7 @@
                     </div>
 
                     <div id="searchResultsContainer">
-                        <p class="text-center text-white/50 py-10 text-base">Enter a keyword to search the Bible</p>
+                        <p class="text-center opacity-50 py-10 text-base">Enter a keyword to search the Bible</p>
                     </div>
                 </div>
 
@@ -267,16 +282,16 @@
     <!-- Font Size Modal -->
     <div id="fontSizeModal"
         class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="glass-modal rounded-2xl shadow-2xl max-w-md w-full p-6 border border-white/20">
+        <div class="glass-modal rounded-2xl shadow-2xl max-w-md w-full p-6 border">
             <h3 class="text-xl font-bold gradient-text mb-5">Reading Settings</h3>
             <div class="space-y-5">
                 <div>
-                    <label class="block text-base font-medium mb-2 text-white/80">Font Size: <span id="fontSizeValue"
+                    <label class="block text-base font-medium mb-2 opacity-80">Font Size: <span id="fontSizeValue"
                             class="gradient-text font-bold"></span>px</label>
                     <input type="range" id="fontSizeSlider" min="14" max="28" step="1" class="w-full glass-slider">
                 </div>
                 <div>
-                    <label class="block text-base font-medium mb-2 text-white/80">Line Height: <span
+                    <label class="block text-base font-medium mb-2 opacity-80">Line Height: <span
                             id="lineHeightValue" class="gradient-text font-bold"></span></label>
                     <input type="range" id="lineHeightSlider" min="1.5" max="2.5" step="0.1"
                         class="w-full glass-slider">

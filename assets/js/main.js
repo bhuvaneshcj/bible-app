@@ -16,6 +16,8 @@ const appState = {
     lineHeight: parseFloat(localStorage.getItem('lineHeight')) || 1.8,
     testamentFilter: 'all',
     sidebarOpen: false,
+    isDarkMode: localStorage.getItem('darkMode') === 'true',
+    currentFont: localStorage.getItem('currentFont') || 'Inter',
     cache: {}
 };
 
@@ -24,24 +26,32 @@ const appState = {
 // ============================================================
 
 const languages = [
-    { code: 'english', name: 'English', font: 'Inter' },
-    { code: 'hindi', name: 'हिन्दी', font: 'Noto Serif Devanagari' },
-    { code: 'tamil', name: 'தமிழ்', font: 'Baloo Thambi 2' },
-    { code: 'telugu', name: 'తెలుగు', font: 'Noto Serif Telugu' },
-    { code: 'malayalam', name: 'മലയാളം', font: 'Noto Serif Malayalam' },
-    { code: 'kannada', name: 'ಕನ್ನಡ', font: 'Noto Serif Kannada' },
-    { code: 'gujarati', name: 'ગુજરાતી', font: 'Noto Serif Gujarati' },
-    { code: 'bengali', name: 'বাংলা', font: 'Noto Serif Bengali' },
-    { code: 'marathi', name: 'मराठी', font: 'Noto Serif Devanagari' },
-    { code: 'punjabi', name: 'ਪੰਜਾਬੀ', font: 'Noto Serif Gurmukhi' },
-    { code: 'oriya', name: 'ଓଡ଼ିଆ', font: 'Noto Serif Oriya' },
-    { code: 'nepali', name: 'नेपाली', font: 'Noto Serif Devanagari' },
-    { code: 'afrikaans', name: 'Afrikaans', font: 'Inter' },
-    { code: 'indonesian', name: 'Bahasa Indonesia', font: 'Inter' },
-    { code: 'hungarian', name: 'Magyar', font: 'Inter' },
-    { code: 'sepedi', name: 'Sepedi', font: 'Inter' },
-    { code: 'xhosa', name: 'isiXhosa', font: 'Inter' },
-    { code: 'zulu', name: 'isiZulu', font: 'Inter' }
+  { code: 'english', name: 'English', font: 'Inter' },
+
+  // Devanagari
+  { code: 'hindi', name: 'हिन्दी', font: 'Noto Serif Devanagari' },
+  { code: 'marathi', name: 'मराठी', font: 'Noto Serif Devanagari' },
+  { code: 'nepali', name: 'नेपाली', font: 'Noto Serif Devanagari' },
+
+  // South Indian scripts
+  { code: 'tamil', name: 'தமிழ்', font: 'Noto Serif Tamil' },
+  { code: 'telugu', name: 'తెలుగు', font: 'Noto Serif Telugu' },
+  { code: 'malayalam', name: 'മലയാളം', font: 'Noto Serif Malayalam' },
+  { code: 'kannada', name: 'ಕನ್ನಡ', font: 'Noto Serif Kannada' },
+
+  // East / North Indian
+  { code: 'bengali', name: 'বাংলা', font: 'Noto Serif Bengali' },
+  { code: 'gujarati', name: 'ગુજરાતી', font: 'Noto Serif Gujarati' },
+  { code: 'punjabi', name: 'ਪੰਜਾਬੀ', font: 'Noto Serif Gurmukhi' },
+  { code: 'oriya', name: 'ଓଡ଼ିଆ', font: 'Noto Serif Oriya' },
+
+  // African & European (Latin)
+  { code: 'afrikaans', name: 'Afrikaans', font: 'Inter' },
+  { code: 'indonesian', name: 'Bahasa Indonesia', font: 'Inter' },
+  { code: 'hungarian', name: 'Magyar', font: 'Inter' },
+  { code: 'sepedi', name: 'Sepedi', font: 'Inter' },
+  { code: 'xhosa', name: 'isiXhosa', font: 'Inter' },
+  { code: 'zulu', name: 'isiZulu', font: 'Inter' }
 ];
 
 // ============================================================
@@ -66,6 +76,7 @@ const el = {
     searchBtn: document.getElementById('searchBtn'),
     languageBtn: document.getElementById('languageBtn'),
     fontSizeBtn: document.getElementById('fontSizeBtn'),
+    themeToggle: document.getElementById('themeToggle'),
 
     // Sidebar
     sidebar: document.getElementById('sidebar'),
@@ -113,7 +124,10 @@ const el = {
 // ============================================================
 
 function init() {
+    applyThemePreferences();
     applyFontPreferences();
+    setDefaultFont();
+    restoreSavedFont();
     setupEventListeners();
     renderLanguageSelection();
     handleRouteFromURL();
@@ -133,6 +147,7 @@ function setupEventListeners() {
     el.searchBtn.addEventListener('click', () => navigateToSearch());
     el.languageBtn.addEventListener('click', () => showLanguageModal());
     el.fontSizeBtn.addEventListener('click', openFontModal);
+    el.themeToggle.addEventListener('click', toggleTheme);
 
     // Font Modal
     el.closeFontModal.addEventListener('click', () => el.fontSizeModal.classList.add('hidden'));
@@ -360,36 +375,81 @@ function openFontModal() {
     updateFontSliderValues();
 }
 
+function setDefaultFont() {
+    // Set Inter as the default font for all users
+    document.body.style.fontFamily = "'Inter', system-ui, -apple-system, sans-serif";
+}
+
+function restoreSavedFont() {
+    // Restore the saved font if it exists and is not Inter
+    if (appState.currentFont && appState.currentFont !== 'Inter') {
+        loadGoogleFont(appState.currentFont);
+    }
+}
+
 function loadGoogleFont(fontFamily) {
+    // Skip loading if it's Inter (already loaded by default)
+    if (fontFamily === 'Inter') {
+        document.body.style.fontFamily = "'Inter', system-ui, -apple-system, sans-serif";
+        appState.currentFont = 'Inter';
+        localStorage.setItem('currentFont', 'Inter');
+        return;
+    }
+    
     // Check if font is already loaded
     const existingLink = document.querySelector(`link[href*="${fontFamily.replace(/\s/g, '+')}"]`);
     if (existingLink) {
-        // Font is already loaded, just apply it
-        document.body.style.fontFamily = `"${fontFamily}", serif`;
+        document.body.style.fontFamily = `"${fontFamily}", 'Inter', system-ui, -apple-system, sans-serif`;
+        appState.currentFont = fontFamily;
+        localStorage.setItem('currentFont', fontFamily);
         return;
     }
 
-    // Create and append the Google Fonts link
+    // Load new font
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s/g, '+')}:wght@400;500;600;700&display=swap`;
-
-    // Apply font after it loads
+    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s/g, '+')}&display=swap`;
     link.onload = () => {
-        document.body.style.fontFamily = `"${fontFamily}", serif`;
+        document.body.style.fontFamily = `"${fontFamily}", 'Inter', system-ui, -apple-system, sans-serif`;
+        appState.currentFont = fontFamily;
+        localStorage.setItem('currentFont', fontFamily);
     };
 
     // Handle loading errors
     link.onerror = () => {
         console.error(`Failed to load font: ${fontFamily}`);
         // Fallback to default font
-        document.body.style.fontFamily = `'Inter', serif`;
+        document.body.style.fontFamily = "'Inter', system-ui, -apple-system, sans-serif";
+        appState.currentFont = 'Inter';
+        localStorage.setItem('currentFont', 'Inter');
     };
 
     document.head.appendChild(link);
 
     // Apply font immediately for better UX (will be updated when font loads)
-    document.body.style.fontFamily = `"${fontFamily}", 'Inter', serif`;
+    document.body.style.fontFamily = `"${fontFamily}", 'Inter', system-ui, -apple-system, sans-serif`;
+    appState.currentFont = fontFamily;
+    localStorage.setItem('currentFont', fontFamily);
+}
+
+// ============================================================
+// THEME MANAGEMENT
+// ============================================================
+
+function applyThemePreferences() {
+    if (appState.isDarkMode) {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        document.body.classList.remove('dark');
+    }
+}
+
+function toggleTheme() {
+    appState.isDarkMode = !appState.isDarkMode;
+    localStorage.setItem('darkMode', appState.isDarkMode);
+    applyThemePreferences();
 }
 
 // ============================================================
@@ -496,8 +556,8 @@ function renderBooks() {
         onclick="selectBook(${idx})"
       >
         <div class="font-bold text-lg mb-2">${book.name}</div>
-        <div class="text-sm text-white/60">${testament}</div>
-        <div class="text-xs text-white/50 mt-2">${book.chapters.length} chapters</div>
+        <div class="text-sm opacity-60">${testament}</div>
+        <div class="text-xs opacity-50 mt-2">${book.chapters.length} chapters</div>
       </button>
     `;
     }).join('');
@@ -572,11 +632,8 @@ function renderVerses() {
     el.verseViewSubtitle.textContent = `Chapter ${appState.chapterIndex + 1}`;
 
     el.versesContainer.innerHTML = chapter.verses.map(verse => `
-    <div class="verse-card">
-      <div class="flex gap-4">
-        <span class="verse-number flex-shrink-0 font-bold text-lg select-none">${verse.number}</span>
-        <p class="flex-1 text-white/90 leading-relaxed">${verse.text}</p>
-      </div>
+    <div class="verse-item">
+      <p class="flex-1 opacity-90 leading-relaxed"><span class="verse-number flex-shrink-0 font-bold text-lg select-none">${verse.number}. </span>${verse.text}</p>
     </div>
   `).join('');
 
@@ -631,14 +688,14 @@ function performSearch() {
 
     if (!query) {
         el.searchResultsContainer.innerHTML = `
-      <p class="text-center text-white/50 py-10">Enter a keyword to search the Bible</p>
+      <p class="text-center opacity-50 py-10">Enter a keyword to search the Bible</p>
     `;
         return;
     }
 
     if (query.length < 2) {
         el.searchResultsContainer.innerHTML = `
-      <p class="text-center text-white/50 py-10">Please enter at least 2 characters</p>
+      <p class="text-center opacity-50 py-10">Please enter at least 2 characters</p>
     `;
         return;
     }
@@ -688,25 +745,25 @@ function renderSearchResults(results, query) {
     if (results.length === 0) {
         el.searchResultsContainer.innerHTML = `
       <div class="text-center py-10">
-        <p class="text-white/70 text-lg mb-2">No results found for "${escapeHtml(query)}"</p>
-        <p class="text-white/50 text-sm">Try different keywords</p>
+        <p class="opacity-70 text-lg mb-2">No results found for "${escapeHtml(query)}"</p>
+        <p class="opacity-50 text-sm">Try different keywords</p>
       </div>
     `;
         return;
     }
 
     el.searchResultsContainer.innerHTML = `
-    <div class="mb-5 text-white/60">
+    <div class="mb-5 opacity-60">
       Found ${results.length} result${results.length > 1 ? 's' : ''}
     </div>
     <div class="space-y-4">
       ${results.map(result => `
         <div class="glass-card p-5 rounded-2xl hover:scale-[1.02] transition-all cursor-pointer"
              onclick="navigateToVerseReading(${result.bookIndex}, ${result.chapterIndex})">
-          <div class="text-sm font-semibold text-purple-400 mb-2">
+          <div class="text-sm font-semibold text-primary-blue mb-2">
             ${result.bookName} ${result.chapterNumber}:${result.verseNumber}
           </div>
-          <p class="text-white/90 leading-relaxed">
+          <p class="opacity-90 leading-relaxed">
             ${highlightText(result.text, query)}
           </p>
         </div>
